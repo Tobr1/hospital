@@ -2,18 +2,18 @@ import React, { createContext, useState } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 
-export const Context = createContext({ isAuthenticated: false });
+export const Contexto = createContext({ isAuthenticated: false });
 
 const AppWrapper = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [admin, setAdmin] = useState({});
 
   return (
-    <Context.Provider
+    <Contexto.Provider
       value={{ isAuthenticated, setIsAuthenticated, admin, setAdmin }}
     >
       <App />
-    </Context.Provider>
+    </Contexto.Provider>
   );
 };
 

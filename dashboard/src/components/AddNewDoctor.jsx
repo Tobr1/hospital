@@ -1,11 +1,11 @@
 import React, { useContext, useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { Context } from "../main";
+import { Contexto } from "../main";
 import axios from "axios";
 
 const AddNewDoctor = () => {
-  const { isAuthenticated, setIsAuthenticated } = useContext(Context);
+  const { isAuthenticated, setIsAuthenticated } = useContext(Contexto);
 
   // Estados para los datos del nuevo doctor
   const [nombre, setNombre] = useState("");

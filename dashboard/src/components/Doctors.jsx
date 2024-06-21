@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { Context } from "../main";
+import { Contexto } from "../main";
 import { Navigate } from "react-router-dom";
 
 const Doctors = () => {
   const [doctors, setDoctors] = useState([]);
-  const { isAuthenticated } = useContext(Context);
+  const { isAuthenticated } = useContext(Contexto);
   useEffect(() => {
     const fetchDoctors = async () => {
       try {

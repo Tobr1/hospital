@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Context } from "../main";
+import { Contexto } from "../main";
 import { Navigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -44,7 +44,7 @@ const Dashboard = () => {
     }
   };
 
-  const { isAuthenticated, admin } = useContext(Context);
+  const { isAuthenticated, admin } = useContext(Contexto);
   if (!isAuthenticated) {
     return <Navigate to={"/login"} />;
   }

@@ -1,27 +1,35 @@
-import dotenv from 'dotenv';
-import express from 'express';
-import mongoose from 'mongoose';
-import dbConnection from './database/dbConnection.js';
-import cloudinary from 'cloudinary';
+const { MongoClient } = require('mongodb');
 
-dotenv.config(); // Cargar variables de entorno desde .env
+// URL de conexión a tu instancia de MongoDB
+const uri = 'mongodb://localhost:27017/Hospital';
 
-const app = express();
-const PORT = process.env.PORT || 5000;
+// Función para conectar a MongoDB usando el cliente MongoClient
+async function conectarMongoDB() {
+  try {
+    // Crear una instancia del cliente MongoClient con las opciones adecuadas
+    const cliente = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+    // Conectar al servidor de MongoDB
+    await cliente.connect();
 
-// Llamar a la función para conectar a la base de datos
-dbConnection();
+    console.log('Conexión a MongoDB establecida correctamente');
 
-// Configurar rutas, middlewares, etc.
-// Ejemplo:
-// app.use('/api', routes);
+    // Devolver el cliente conectado para que pueda ser utilizado
+    return cliente;
+  } catch (error) {
+    // Manejar cualquier error de conexión
+    console.error('Error al conectar a MongoDB:', error);
+    throw error; // Lanzar el error para que sea capturado por el código que llama a esta función
+  }
+}
 
-app.listen(PORT, () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
-});
+
+
+  
+
+
+// Exportar la función conectarMongoDB para que pueda ser utilizada por otros módulos
+module.exports = conectarMongoDB;
+
+
+

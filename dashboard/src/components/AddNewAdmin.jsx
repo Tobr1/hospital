@@ -1,61 +1,59 @@
 import React, { useContext, useState } from "react";
-import { Contexto } from "../main";  // Variable 'Context' traducida a 'Contexto'
+import { Contexto } from "../main";
 import { Navigate, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-const AgregarNuevoAdmin = () => {  // Constante 'AddNewAdmin' traducida a 'AgregarNuevoAdmin'
-  const { isAuthenticated, setIsAuthenticated } = useContext(Contexto);  // Variables 'isAuthenticated' y 'setIsAuthenticated' traducidas
+const AgregarNuevoAdmin = () => {
+  const { isAuthenticated, setIsAuthenticated } = useContext(Contexto);
 
-  const [primerNombre, setPrimerNombre] = useState("");  // Variable 'firstName' traducida a 'primerNombre'
-  const [apellido, setApellido] = useState("");  // Variable 'lastName' traducida a 'apellido'
-  const [correo, setCorreo] = useState("");  // Variable 'email' traducida a 'correo'
-  const [telefono, setTelefono] = useState("");  // Variable 'phone' traducida a 'telefono'
-  const [dni, setDni] = useState("");  // Variable 'nic' traducida a 'nic'
-  const [fechaNacimiento, setFechaNacimiento] = useState("");  // Variable 'dob' traducida a 'fechaNacimiento'
-  const [genero, setGenero] = useState("");  // Variable 'gender' traducida a 'genero'
-  const [contrasena, setContrasena] = useState("");  // Variable 'password' traducida a 'contrasena'
+  const [primerNombre, setPrimerNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [telefono, setTelefono] = useState("");
+  const [dni, setDni] = useState("");  // Cambio de 'nic' a 'dni'
+  const [fechaNacimiento, setFechaNacimiento] = useState("");
+  const [genero, setGenero] = useState("");
+  const [contrasena, setContrasena] = useState("");
 
-  const navegarA = useNavigate();  // Variable 'navigateTo' traducida a 'navegarA'
+  const navegarA = useNavigate();
 
-  const manejarAgregarNuevoAdmin = async (e) => {  // Función 'handleAddNewAdmin' traducida a 'manejarAgregarNuevoAdmin'
+  const manejarAgregarNuevoAdmin = async (e) => {
     e.preventDefault();
     try {
-      await axios
-        .post(
-          "http://localhost:4000/api/v1/user/admin/addnew",
-          { primerNombre, apellido, correo, telefono, nic, fechaNacimiento, genero, contrasena },  // Variables pasadas al cuerpo de la solicitud traducidas
-          {
-            withCredentials: true,
-            headers: { "Content-Type": "application/json" },
-          }
-        )
-        .then((res) => {
-          toast.success(res.data.message);
-          setIsAuthenticated(true);
-          navegarA("/");
-          setPrimerNombre("");
-          setApellido("");
-          setCorreo("");
-          setTelefono("");
-          setDni("");
-          setFechaNacimiento("");
-          setGenero("");
-          setContrasena("");
-        });
+      await axios.post(
+        "http://localhost:4000/api/v1/user/admin/addnew",
+        { primerNombre, apellido, correo, telefono, dni, fechaNacimiento, genero, contrasena },
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      ).then((res) => {
+        toast.success(res.data.message);
+        setIsAuthenticated(true);
+        navegarA("/");
+        setPrimerNombre("");
+        setApellido("");
+        setCorreo("");
+        setTelefono("");
+        setDni("");
+        setFechaNacimiento("");
+        setGenero("");
+        setContrasena("");
+      });
     } catch (error) {
       toast.error(error.response.data.message);
     }
   };
 
   if (!isAuthenticated) {
-    return <Navigate to={"/login"} />;  // Constante 'Navigate' traducida a 'Navigate'
+    return <Navigate to={"/login"} />;
   }
 
   return (
     <section className="page">
       <section className="container form-component add-admin-form">
-      <img src="/logo.png" alt="logo" className="logo"/>
+        <img src="/logo.png" alt="logo" className="logo" />
         <h1 className="form-title">AGREGAR NUEVO ADMINISTRADOR</h1>
         <form onSubmit={manejarAgregarNuevoAdmin}>
           <div>
@@ -90,7 +88,7 @@ const AgregarNuevoAdmin = () => {  // Constante 'AddNewAdmin' traducida a 'Agreg
             <input
               type="number"
               placeholder="DNI"
-              value={nic}
+              value={dni}
               onChange={(e) => setDni(e.target.value)}
             />
             <input
